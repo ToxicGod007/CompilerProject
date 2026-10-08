@@ -1,0 +1,66 @@
+CXX = clang++
+CXXFLAGS = -std=c++17 -Wall -Wextra -O2 -Iinclude
+
+SRC_DIR = src
+INC_DIR = include
+OBJ_DIR = obj
+BIN_DIR = bin
+TEST_DIR = tests
+
+# Core objects for library
+CORE_OBJS = $(OBJ_DIR)/Instruction.o \
+            $(OBJ_DIR)/Parser.o \
+            $(OBJ_DIR)/OptimizationPatterns.o \
+            $(OBJ_DIR)/PeepholeOptimizer.o \
+            $(OBJ_DIR)/ControlFlowOptimizer.o
+
+# Targets
+MAIN_BIN = $(BIN_DIR)/peephole_opt
+TEST1_BIN = $(BIN_DIR)/test_person1
+TEST2_BIN = $(BIN_DIR)/test_person2
+
+all: $(MAIN_BIN) $(TEST1_BIN) $(TEST2_BIN)
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
+
+# Compilation rules
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Main executable
+$(MAIN_BIN): $(CORE_OBJS) $(OBJ_DIR)/main.o | $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+# Person 1 test executable
+$(TEST1_BIN): $(OBJ_DIR)/Instruction.o $(OBJ_DIR)/Parser.o $(TEST_DIR)/test_person1.cpp | $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+# Person 2 test executable
+$(TEST2_BIN): $(CORE_OBJS) $(TEST_DIR)/test_person2.cpp | $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+test: $(TEST1_BIN) $(TEST2_BIN)
+	@echo "\n>>> RUNNING TEST SUITE (PERSON 1) <<<"
+	./$(TEST1_BIN)
+	@echo "\n>>> RUNNING TEST SUITE (PERSON 2) <<<"
+	./$(TEST2_BIN)
+	@echo "\n>>> ALL TESTS PASSED! <<<\n"
+
+test1: $(TEST1_BIN)
+	./$(TEST1_BIN)
+
+test2: $(TEST2_BIN)
+	./$(TEST2_BIN)
+
+demo: $(MAIN_BIN)
+	./$(MAIN_BIN) tests/sample.asm
+
+clean:
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
+
+.PHONY: all test test1 test2 demo clean
+
