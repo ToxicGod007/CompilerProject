@@ -10,7 +10,6 @@
 
 /**
  * ============================================================================
- * PERSON 2 WORK: Peephole Optimizer Engine
  * ============================================================================
  * 
  * Manages the sliding-window peephole optimization loop, coordinating rules,
@@ -28,7 +27,7 @@ public:
     // Rule management
     void addRule(std::unique_ptr<OptimizationRule> rule);
     void clearRules();
-    void loadStandardRules(); // Loads standard Person 2 rules
+    void loadStandardRules(); // Loads standard rules
 
     // Optimization execution
     std::vector<Instruction> optimize(const std::vector<Instruction>& instructions,
@@ -46,7 +45,7 @@ public:
 
 private:
     std::vector<std::unique_ptr<OptimizationRule>> m_rules;
-    int m_maxPasses{10};
+    int m_maxPasses{100};
     bool m_verbose{false};
     OptimizationStats m_lastStats;
 

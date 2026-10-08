@@ -10,7 +10,6 @@ using namespace compiler;
 void printBanner() {
     std::cout << "=========================================================\n";
     std::cout << "          TARGET ISA PEEPHOLE OPTIMIZER (C++17)          \n";
-    std::cout << "  Milestone: 25% Goal (P1 & P2: 16.67% Done | P3 Pending) \n";
     std::cout << "=========================================================\n\n";
 }
 
@@ -38,7 +37,7 @@ int runDemo() {
         "    NOP                   ; No-operation (Eligible for Elimination)\n"
         "    RET\n";
 
-    std::cout << ">>> 1. ORIGINAL INPUT ASSEMBLY (Parsed by Person 1):\n";
+    std::cout << ">>> 1. ORIGINAL INPUT ASSEMBLY:\n";
     std::cout << "---------------------------------------------------------\n";
     std::cout << sampleAsm << "\n";
 
@@ -46,9 +45,9 @@ int runDemo() {
     std::vector<Instruction> instructions = parser.parseString(sampleAsm);
     std::cout << "Successfully parsed " << instructions.size() << " instructions.\n\n";
 
-    std::cout << ">>> 2. RUNNING PEEPHOLE OPTIMIZATION ENGINE (Person 2):\n";
+    std::cout << ">>> 2. RUNNING PEEPHOLE OPTIMIZATION ENGINE:\n";
     std::cout << "---------------------------------------------------------\n";
-    PeepholeOptimizer optimizer(10, /*verbose=*/true);
+    PeepholeOptimizer optimizer(100, /*verbose=*/true);
     OptimizationStats stats;
     std::vector<Instruction> optimized = optimizer.optimize(instructions, stats);
 
@@ -80,7 +79,7 @@ int main(int argc, char* argv[]) {
         std::vector<Instruction> instructions = parser.parseFile(inputFile);
         std::cout << "Parsed " << instructions.size() << " instructions.\n\n";
 
-        PeepholeOptimizer optimizer(10, /*verbose=*/true);
+        PeepholeOptimizer optimizer(100, /*verbose=*/true);
         OptimizationStats stats;
         std::vector<Instruction> optimized = optimizer.optimize(instructions, stats);
 

@@ -7,7 +7,7 @@
 using namespace compiler;
 
 void testOperands() {
-    std::cout << "[Test Person 1] Testing Operand creation and comparisons...\n";
+    std::cout << "[Test] Testing Operand creation and comparisons...\n";
     Operand r0 = Operand::makeRegister("R0");
     Operand r0_lower = Operand::makeRegister("r0");
     assert(r0 == r0_lower);
@@ -32,7 +32,7 @@ void testOperands() {
 }
 
 void testInstructionAnalysis() {
-    std::cout << "[Test Person 1] Testing Instruction read/write register analysis...\n";
+    std::cout << "[Test] Testing Instruction read/write register analysis...\n";
     Instruction mov = Instruction::make(Opcode::MOV, Operand::makeRegister("R0"), Operand::makeRegister("R1"));
     assert(mov.writesRegister("R0"));
     assert(!mov.writesRegister("R1"));
@@ -54,7 +54,7 @@ void testInstructionAnalysis() {
 }
 
 void testParser() {
-    std::cout << "[Test Person 1] Testing Assembly Parser and Lexer...\n";
+    std::cout << "[Test] Testing Assembly Parser and Lexer...\n";
     std::string testCode =
         "; Comment line\n"
         "start:\n"
@@ -96,11 +96,11 @@ void testParser() {
 
 int main() {
     std::cout << "========================================\n";
-    std::cout << "  RUNNING PERSON 1 UNIT TEST SUITE      \n";
+    std::cout << "  RUNNING PARSER UNIT TEST SUITE      \n";
     std::cout << "========================================\n";
     testOperands();
     testInstructionAnalysis();
     testParser();
-    std::cout << "\nALL PERSON 1 TESTS PASSED SUCCESSFULLY!\n";
+    std::cout << "\nALL TESTS PASSED SUCCESSFULLY!\n";
     return 0;
 }

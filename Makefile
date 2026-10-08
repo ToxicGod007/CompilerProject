@@ -29,31 +29,31 @@ $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
 # Compilation rules
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INC_DIR)/*.h | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Main executable
 $(MAIN_BIN): $(CORE_OBJS) $(OBJ_DIR)/main.o | $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Person 1 test executable
+# Parser test executable
 $(TEST1_BIN): $(OBJ_DIR)/Instruction.o $(OBJ_DIR)/Parser.o $(TEST_DIR)/test_person1.cpp | $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Person 2 test executable
+# Optimizer test executable
 $(TEST2_BIN): $(CORE_OBJS) $(TEST_DIR)/test_person2.cpp | $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Person 3 test executable
+# Control Flow test executable
 $(TEST3_BIN): $(CORE_OBJS) $(TEST_DIR)/test_person3.cpp | $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 test: $(TEST1_BIN) $(TEST2_BIN) $(TEST3_BIN)
-	@echo "\n>>> RUNNING TEST SUITE (PERSON 1) <<<"
+	@echo "\n>>> RUNNING TEST SUITE (PARSER) <<<"
 	./$(TEST1_BIN)
-	@echo "\n>>> RUNNING TEST SUITE (PERSON 2) <<<"
+	@echo "\n>>> RUNNING TEST SUITE (OPTIMIZER) <<<"
 	./$(TEST2_BIN)
-	@echo "\n>>> RUNNING TEST SUITE (PERSON 3) <<<"
+	@echo "\n>>> RUNNING TEST SUITE (CONTROL FLOW) <<<"
 	./$(TEST3_BIN)
 	@echo "\n>>> ALL TESTS PASSED! <<<\n"
 

@@ -9,7 +9,6 @@
 
 /**
  * ============================================================================
- * PERSON 2 WORK: Modular Optimization Rule Interface
  * ============================================================================
  * 
  * Abstract base class for peephole optimization rules. Each rule inspects
@@ -27,7 +26,6 @@ public:
     virtual std::string name() const = 0;
 
     // Maximum number of instructions this rule looks at
-    virtual size_t windowSize() const = 0;
 
     /**
      * Attempts to match and apply the rule at the specified position.

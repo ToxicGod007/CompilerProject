@@ -8,7 +8,6 @@
 
 /**
  * ============================================================================
- * PERSON 1 WORK: Target Instruction Set Representation & Data Structures
  * ============================================================================
  * 
  * Defines the Target Architecture Instruction Set, Operand types, and IR

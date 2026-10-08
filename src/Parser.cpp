@@ -114,13 +114,21 @@ Operand Parser::parseOperand(const std::string& rawToken) {
             std::string base = trimCopy(inner.substr(0, plusPos));
             std::string offStr = trimCopy(inner.substr(plusPos + 1));
             int offVal = 0;
-            try { offVal = std::stoi(offStr); } catch (...) {}
+            size_t idx = 0;
+            try { 
+                offVal = std::stoi(offStr, &idx);
+                if (idx != offStr.size()) throw std::runtime_error("Invalid memory offset");
+            } catch (...) { throw std::runtime_error("Invalid memory offset: " + offStr); }
             return Operand::makeMemory(token, base, offVal);
         } else if (minusPos != std::string::npos && minusPos > 0) {
             std::string base = trimCopy(inner.substr(0, minusPos));
             std::string offStr = trimCopy(inner.substr(minusPos + 1));
             int offVal = 0;
-            try { offVal = -std::stoi(offStr); } catch (...) {}
+            size_t idx = 0;
+            try { 
+                offVal = -std::stoi(offStr, &idx);
+                if (idx != offStr.size()) throw std::runtime_error("Invalid memory offset");
+            } catch (...) { throw std::runtime_error("Invalid memory offset: " + offStr); }
             return Operand::makeMemory(token, base, offVal);
         } else {
             // e.g. [R1] or [var]
@@ -138,10 +146,12 @@ Operand Parser::parseOperand(const std::string& rawToken) {
     // 2. Immediate with '#' prefix: #10, #-5, #0
     if (token.front() == '#') {
         int val = 0;
+        size_t idx = 0;
         try {
-            val = std::stoi(token.substr(1));
+            val = std::stoi(token.substr(1), &idx);
+            if (idx != token.size() - 1) throw std::runtime_error("Invalid immediate operand");
         } catch (...) {
-            val = 0;
+            throw std::runtime_error("Invalid immediate operand: " + token);
         }
         return Operand::makeImmediate(val, true);
     }
@@ -203,8 +213,7 @@ bool Parser::parseLine(const std::string& rawLine, int lineNumber, std::vector<I
 
     Opcode op = stringToOpcode(mnemonic);
     if (op == Opcode::UNKNOWN) {
-        // Unknown opcode, ignore or handle gracefully
-        return false;
+        throw std::runtime_error("Unknown mnemonic: " + mnemonic);
     }
 
     // The rest of the line contains operands

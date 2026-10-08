@@ -83,6 +83,12 @@ CompilerProject/
 make all
 ```
 
+*(Note for Windows users: The `Makefile` assumes a Unix-like environment with `clang++`, `mkdir`, and `rm`. You may need to use WSL, MSYS2, or MinGW to run `make`, or otherwise compile the `.cpp` files manually.)*
+
+### Design Assumptions
+* **Cost Model**: Optimizations like `MUL #2 -> LSL #1` assume that shifts and increments are faster or use fewer bytes than multiplication and addition on the target processor.
+* **Side Effects**: The rules assume arithmetic instructions and redundant memory operations do not have essential side effects (e.g., setting un-modeled condition flags or interacting with memory-mapped I/O).
+
 ### 2. Run Test Suites
 ```bash
 make test

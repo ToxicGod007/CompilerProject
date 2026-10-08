@@ -7,19 +7,17 @@
 
 /**
  * ============================================================================
- * PERSON 3 WORK: Control Flow & Unreachable Code Optimizations (TO BE IMPLEMENTED)
  * ============================================================================
  * 
  * This file outlines the specifications for Person 3's contribution to the
  * Peephole Optimizer project.
  * 
- * Planned Responsibilities for Person 3:
  *  1. Redundant Jump Elimination (JMP L1 followed immediately by L1:)
  *  2. Branch Chaining / Jump-to-Jump (JMP L1 where L1 is JMP L2 -> JMP L2)
  *  3. Inverted Conditional Branch over Jump (BEQ L1; JMP L2; L1: -> BNE L2; L1:)
  *  4. Unreachable Dead Code Elimination (instructions following JMP/RET before next label)
- *  5. Unused Label Elimination
- *  6. CLI Runner and Benchmarking Suite
+ * 
+ * Note: Unused Label Elimination and Benchmarking Suite were originally planned but descoped.
  */
 
 namespace compiler {
@@ -30,9 +28,7 @@ namespace compiler {
 class RedundantJumpRule : public OptimizationRule {
 public:
     std::string name() const override { return "Redundant Jump Elimination"; }
-    size_t windowSize() const override { return 2; }
 
-    // TODO: Person 3 to implement in src/ControlFlowOptimizer.cpp
     bool apply(const std::vector<Instruction>& instructions,
                size_t index,
                size_t& consumedCount,
@@ -45,9 +41,7 @@ public:
 class JumpChainingRule : public OptimizationRule {
 public:
     std::string name() const override { return "Branch Chaining"; }
-    size_t windowSize() const override { return 3; }
 
-    // TODO: Person 3 to implement in src/ControlFlowOptimizer.cpp
     bool apply(const std::vector<Instruction>& instructions,
                size_t index,
                size_t& consumedCount,
@@ -60,9 +54,7 @@ public:
 class JumpOverJumpRule : public OptimizationRule {
 public:
     std::string name() const override { return "Jump Over Jump Inversion"; }
-    size_t windowSize() const override { return 3; }
 
-    // TODO: Person 3 to implement in src/ControlFlowOptimizer.cpp
     bool apply(const std::vector<Instruction>& instructions,
                size_t index,
                size_t& consumedCount,
@@ -75,9 +67,7 @@ public:
 class UnreachableCodeRule : public OptimizationRule {
 public:
     std::string name() const override { return "Unreachable Code Elimination"; }
-    size_t windowSize() const override { return 2; }
 
-    // TODO: Person 3 to implement in src/ControlFlowOptimizer.cpp
     bool apply(const std::vector<Instruction>& instructions,
                size_t index,
                size_t& consumedCount,

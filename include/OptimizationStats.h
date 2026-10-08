@@ -8,7 +8,6 @@
 
 /**
  * ============================================================================
- * PERSON 2 WORK: Optimization Statistics & Reporting
  * ============================================================================
  * 
  * Tracks optimization metrics across passes, including instruction counts,
@@ -54,7 +53,7 @@ struct OptimizationStats {
         out << "Final Instructions:     " << finalInstructionCount << "\n";
         out << "Instructions Removed:   " << (initialInstructionCount - finalInstructionCount) << "\n";
         out << std::fixed << std::setprecision(2);
-        out << "Code Size Reduction:    " << getReductionPercentage() << "%\n";
+        out << "Instruction-entry Reduction: " << getReductionPercentage() << "%\n";
         out << "Total Transformations:  " << totalTransformations << "\n";
         out << "----------------------------------------\n";
         out << "Transformations Breakdown:\n";

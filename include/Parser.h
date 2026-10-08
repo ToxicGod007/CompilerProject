@@ -9,7 +9,6 @@
 
 /**
  * ============================================================================
- * PERSON 1 WORK: Assembly Parser and Formatter / Emitter
  * ============================================================================
  * 
  * Provides lexing and parsing capabilities for reading assembly source code

@@ -9,7 +9,7 @@
 using namespace compiler;
 
 void testRedundantLoadAfterStore() {
-    std::cout << "[Test Person 2] Testing Redundant Load After Store...\n";
+    std::cout << "[Test] Testing Redundant Load After Store...\n";
     // Case 1A: STORE R1, [M] followed by LOAD R1, [M] -> Eliminate LOAD
     std::string code1 = 
         "    STORE R1, [R0 + 4]\n"
@@ -37,7 +37,7 @@ void testRedundantLoadAfterStore() {
 }
 
 void testDeadStore() {
-    std::cout << "[Test Person 2] Testing Dead Store Elimination...\n";
+    std::cout << "[Test] Testing Dead Store Elimination...\n";
     std::string code = 
         "    STORE R1, [R0]\n"
         "    STORE R2, [R0]\n";
@@ -52,7 +52,7 @@ void testDeadStore() {
 }
 
 void testRedundantMoves() {
-    std::cout << "[Test Person 2] Testing Redundant Move Elimination...\n";
+    std::cout << "[Test] Testing Redundant Move Elimination...\n";
     // Self-move
     std::string code1 = "    MOV R3, R3\n";
     Parser parser;
@@ -76,7 +76,7 @@ void testRedundantMoves() {
 }
 
 void testAlgebraicSimplification() {
-    std::cout << "[Test Person 2] Testing Algebraic Identity Simplifications...\n";
+    std::cout << "[Test] Testing Algebraic Identity Simplifications...\n";
     std::string code = 
         "    ADD R1, #0\n"
         "    SUB R2, #0\n"
@@ -104,7 +104,7 @@ void testAlgebraicSimplification() {
 }
 
 void testStrengthReduction() {
-    std::cout << "[Test Person 2] Testing Strength Reduction...\n";
+    std::cout << "[Test] Testing Strength Reduction...\n";
     std::string code = 
         "    MUL R1, #2\n"
         "    ADD R2, #1\n"
@@ -129,7 +129,7 @@ void testStrengthReduction() {
 }
 
 void testConstantFolding() {
-    std::cout << "[Test Person 2] Testing Constant Folding...\n";
+    std::cout << "[Test] Testing Constant Folding...\n";
     std::string code = 
         "    MOV R1, #20\n"
         "    ADD R1, #15\n"
@@ -153,7 +153,7 @@ void testConstantFolding() {
 }
 
 void testLabelPreservation() {
-    std::cout << "[Test Person 2] Testing Label Safety Invariance...\n";
+    std::cout << "[Test] Testing Label Safety Invariance...\n";
     // Crucial safety test: optimizer must NOT optimize across labels
     std::string code = 
         "    STORE R1, [R0]\n"
@@ -175,7 +175,7 @@ void testLabelPreservation() {
 
 int main() {
     std::cout << "========================================\n";
-    std::cout << "  RUNNING PERSON 2 UNIT TEST SUITE      \n";
+    std::cout << "  RUNNING OPTIMIZER UNIT TEST SUITE      \n";
     std::cout << "========================================\n";
     testRedundantLoadAfterStore();
     testDeadStore();
@@ -184,7 +184,7 @@ int main() {
     testStrengthReduction();
     testConstantFolding();
     testLabelPreservation();
-    std::cout << "\nALL PERSON 2 TESTS PASSED SUCCESSFULLY!\n";
+    std::cout << "\nALL TESTS PASSED SUCCESSFULLY!\n";
     return 0;
 }
 

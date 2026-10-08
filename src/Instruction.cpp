@@ -2,6 +2,7 @@
 #include <sstream>
 #include <algorithm>
 #include <cctype>
+#include <stdexcept>
 
 namespace compiler {
 
@@ -41,7 +42,7 @@ Operand Operand::makeMemory(const std::string& rawMem, const std::string& baseRe
     Operand op;
     op.type = OperandType::MEMORY;
     op.text = rawMem;
-    op.baseRegister = toUpper(baseReg);
+    op.baseRegister = baseReg;
     op.memoryOffset = offset;
     return op;
 }
@@ -74,7 +75,7 @@ bool Operand::operator==(const Operand& other) const {
     }
     if (type == OperandType::MEMORY) {
         if (!baseRegister.empty() && !other.baseRegister.empty()) {
-            return toUpper(baseRegister) == toUpper(other.baseRegister) && memoryOffset == other.memoryOffset;
+            return baseRegister == other.baseRegister && memoryOffset == other.memoryOffset;
         }
         return text == other.text;
     }
@@ -204,20 +205,17 @@ Instruction Instruction::make(Opcode op, const Operand& op1, const Operand& op2,
 }
 
 const Operand& Instruction::getOperand(size_t index) const {
-    static const Operand emptyOp;
     if (index < operands.size()) {
         return operands[index];
     }
-    return emptyOp;
+    throw std::out_of_range("Operand index out of bounds");
 }
 
 Operand& Instruction::getOperand(size_t index) {
-    static Operand emptyOp;
     if (index < operands.size()) {
         return operands[index];
     }
-    emptyOp = Operand();
-    return emptyOp;
+    throw std::out_of_range("Operand index out of bounds");
 }
 
 bool Instruction::readsRegister(const std::string& reg) const {

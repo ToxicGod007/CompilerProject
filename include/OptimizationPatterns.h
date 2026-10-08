@@ -7,7 +7,6 @@
 
 /**
  * ============================================================================
- * PERSON 2 WORK: Concrete Peephole Optimization Patterns
  * ============================================================================
  * 
  * Implements standard compiler peephole optimizations:
@@ -28,7 +27,6 @@ namespace compiler {
 class RedundantLoadAfterStoreRule : public OptimizationRule {
 public:
     std::string name() const override { return "Redundant Load After Store"; }
-    size_t windowSize() const override { return 2; }
     bool apply(const std::vector<Instruction>& instructions,
                size_t index,
                size_t& consumedCount,
@@ -41,7 +39,6 @@ public:
 class DeadStoreRule : public OptimizationRule {
 public:
     std::string name() const override { return "Dead Store Elimination"; }
-    size_t windowSize() const override { return 2; }
     bool apply(const std::vector<Instruction>& instructions,
                size_t index,
                size_t& consumedCount,
@@ -54,7 +51,6 @@ public:
 class RedundantMoveRule : public OptimizationRule {
 public:
     std::string name() const override { return "Redundant Move Elimination"; }
-    size_t windowSize() const override { return 2; }
     bool apply(const std::vector<Instruction>& instructions,
                size_t index,
                size_t& consumedCount,
@@ -67,7 +63,6 @@ public:
 class AlgebraicIdentityRule : public OptimizationRule {
 public:
     std::string name() const override { return "Algebraic Identity Simplification"; }
-    size_t windowSize() const override { return 1; }
     bool apply(const std::vector<Instruction>& instructions,
                size_t index,
                size_t& consumedCount,
@@ -80,7 +75,6 @@ public:
 class StrengthReductionRule : public OptimizationRule {
 public:
     std::string name() const override { return "Strength Reduction"; }
-    size_t windowSize() const override { return 1; }
     bool apply(const std::vector<Instruction>& instructions,
                size_t index,
                size_t& consumedCount,
@@ -93,7 +87,6 @@ public:
 class ConstantFoldingRule : public OptimizationRule {
 public:
     std::string name() const override { return "Constant Folding"; }
-    size_t windowSize() const override { return 2; }
     bool apply(const std::vector<Instruction>& instructions,
                size_t index,
                size_t& consumedCount,
@@ -106,7 +99,6 @@ public:
 class NopEliminationRule : public OptimizationRule {
 public:
     std::string name() const override { return "NOP Elimination"; }
-    size_t windowSize() const override { return 1; }
     bool apply(const std::vector<Instruction>& instructions,
                size_t index,
                size_t& consumedCount,
@@ -114,7 +106,7 @@ public:
 };
 
 // Factory helper to instantiate standard Person 2 rules
-std::vector<std::unique_ptr<OptimizationRule>> createPerson2StandardRules();
+std::vector<std::unique_ptr<OptimizationRule>> createStandardRules();
 
 } // namespace compiler
 

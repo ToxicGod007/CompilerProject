@@ -11,7 +11,8 @@ void testRedundantJump() {
         "JMP L1\n"
         "L1:\n"
         "MOV R0, #1\n";
-    auto instructions = Parser::parseString(code);
+    Parser parser;
+    auto instructions = parser.parseString(code);
     PeepholeOptimizer opt;
     auto optimized = opt.optimize(instructions);
     assert(optimized.size() == 2);
@@ -27,7 +28,8 @@ void testJumpChaining() {
         "JMP L2\n"
         "L2:\n"
         "MOV R1, #2\n";
-    auto instructions = Parser::parseString(code);
+    Parser parser;
+    auto instructions = parser.parseString(code);
     PeepholeOptimizer opt;
     auto optimized = opt.optimize(instructions);
     
@@ -41,7 +43,8 @@ void testJumpOverJump() {
         "JMP L2\n"
         "L1:\n"
         "MOV R0, #1\n";
-    auto instructions = Parser::parseString(code);
+    Parser parser;
+    auto instructions = parser.parseString(code);
     PeepholeOptimizer opt;
     auto optimized = opt.optimize(instructions);
     
@@ -58,13 +61,14 @@ void testUnreachableCode() {
         "ADD R0, R0\n"
         "L1:\n"
         "MOV R1, #2\n";
-    auto instructions = Parser::parseString(code);
+    Parser parser;
+    auto instructions = parser.parseString(code);
     PeepholeOptimizer opt;
     auto optimized = opt.optimize(instructions);
     
-    assert(optimized.size() == 3);
-    assert(optimized[0].opcode == Opcode::JMP);
-    assert(optimized[1].opcode == Opcode::LABEL_DEF);
+    assert(optimized.size() == 2);
+    assert(optimized[0].opcode == Opcode::LABEL_DEF);
+    assert(optimized[1].opcode == Opcode::MOV);
 }
 
 int main() {
@@ -72,6 +76,6 @@ int main() {
     testJumpChaining();
     testJumpOverJump();
     testUnreachableCode();
-    std::cout << "Person 3 tests passed!\n";
+    std::cout << "Control Flow tests passed!\n";
     return 0;
 }

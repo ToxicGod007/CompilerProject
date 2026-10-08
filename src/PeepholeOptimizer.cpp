@@ -24,7 +24,7 @@ void PeepholeOptimizer::clearRules() {
 }
 
 void PeepholeOptimizer::loadStandardRules() {
-    m_rules = createPerson2StandardRules();
+    m_rules = createStandardRules();
     m_rules.push_back(std::make_unique<RedundantJumpRule>());
     m_rules.push_back(std::make_unique<JumpChainingRule>());
     m_rules.push_back(std::make_unique<JumpOverJumpRule>());

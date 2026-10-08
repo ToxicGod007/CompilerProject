@@ -141,7 +141,7 @@ bool AlgebraicIdentityRule::apply(const std::vector<Instruction>& instructions,
                                   std::vector<Instruction>& replacement) {
     const auto& inst = instructions[index];
 
-    if (inst.operands.size() < 2) return false;
+    if (inst.operands.size() != 2) return false;
 
     const Operand& dst = inst.operands[0];
     const Operand& src = inst.operands[1];
@@ -203,7 +203,7 @@ bool StrengthReductionRule::apply(const std::vector<Instruction>& instructions,
                                   size_t& consumedCount,
                                   std::vector<Instruction>& replacement) {
     const auto& inst = instructions[index];
-    if (inst.operands.size() < 2) return false;
+    if (inst.operands.size() != 2) return false;
 
     const Operand& dst = inst.operands[0];
     const Operand& src = inst.operands[1];
@@ -259,10 +259,10 @@ bool ConstantFoldingRule::apply(const std::vector<Instruction>& instructions,
     // Pattern:
     // i1: MOV Rd, #C1
     // i2: OP  Rd, #C2  (where OP is ADD, SUB, or MUL)
-    if (i1.opcode != Opcode::MOV || i1.operands.size() < 2) return false;
+    if (i1.opcode != Opcode::MOV || i1.operands.size() != 2) return false;
     if (!i1.operands[0].isRegister() || !i1.operands[1].isImmediate()) return false;
 
-    if (i2.operands.size() < 2) return false;
+    if (i2.operands.size() != 2) return false;
     if (!i2.operands[0].isRegister() || !i2.operands[1].isImmediate()) return false;
 
     // Both instructions must target the same register
@@ -274,11 +274,11 @@ bool ConstantFoldingRule::apply(const std::vector<Instruction>& instructions,
     int foldedResult = 0;
 
     if (i2.opcode == Opcode::ADD) {
-        foldedResult = c1 + c2;
+        foldedResult = static_cast<int>(static_cast<unsigned int>(c1) + static_cast<unsigned int>(c2));
     } else if (i2.opcode == Opcode::SUB) {
-        foldedResult = c1 - c2;
+        foldedResult = static_cast<int>(static_cast<unsigned int>(c1) - static_cast<unsigned int>(c2));
     } else if (i2.opcode == Opcode::MUL) {
-        foldedResult = c1 * c2;
+        foldedResult = static_cast<int>(static_cast<unsigned int>(c1) * static_cast<unsigned int>(c2));
     } else {
         return false;
     }
@@ -315,7 +315,7 @@ bool NopEliminationRule::apply(const std::vector<Instruction>& instructions,
 // ---------------------------------------------------------------------------
 // Factory
 // ---------------------------------------------------------------------------
-std::vector<std::unique_ptr<OptimizationRule>> createPerson2StandardRules() {
+std::vector<std::unique_ptr<OptimizationRule>> createStandardRules() {
     std::vector<std::unique_ptr<OptimizationRule>> rules;
     // Register in preferred priority order
     rules.push_back(std::make_unique<RedundantLoadAfterStoreRule>());
