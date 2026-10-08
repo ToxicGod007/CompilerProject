@@ -10,7 +10,7 @@ using namespace compiler;
 void printBanner() {
     std::cout << "=========================================================\n";
     std::cout << "          TARGET ISA PEEPHOLE OPTIMIZER (C++17)          \n";
-    std::cout << "  Milestone: 25% Completion (Person 1 & Person 2 done)   \n";
+    std::cout << "  Milestone: 25% Goal (P1 & P2: 16.67% Done | P3 Pending) \n";
     std::cout << "=========================================================\n\n";
 }
 

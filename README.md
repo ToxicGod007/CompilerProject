@@ -6,11 +6,12 @@ A modular, multi-pass peephole optimizer designed for a simple target load-store
 
 ## 👥 Team Workload & Milestone Breakdown (25% Milestone)
 
-| Team Member | Module & Responsibilities | Status |
-| :--- | :--- | :--- |
-| **Person 1** | **Target Architecture IR, Lexer, Parser & Emitter**<br>• Target ISA specification (Opcodes, Operands)<br>• Instruction IR (`Instruction`, `Operand`)<br>• Assembly file & string parser (`Parser`)<br>• Assembly emitter/pretty-printer<br>• Register usage analysis (`readsRegister`, `writesRegister`)<br>• Person 1 unit tests (`tests/test_person1.cpp`) | **✅ COMPLETED** |
-| **Person 2** | **Core Peephole Engine & Local Pattern Transformations**<br>• Sliding-window multi-pass optimization engine (`PeepholeOptimizer`)<br>• Fixed-point convergence algorithm<br>• Optimization metrics & reporting (`OptimizationStats`)<br>• Extensible rule interface (`OptimizationRule`)<br>• 7 Optimization patterns: Redundant Load/Store, Dead Store, Redundant Moves, Algebraic Simplification, Strength Reduction, Constant Folding, NOP Elimination<br>• Label safety barrier preservation<br>• Person 2 unit tests (`tests/test_person2.cpp`) | **✅ COMPLETED** |
-| **Person 3** | **Control Flow & Dead Code Optimizations**<br>• Redundant jump elimination (`JMP L1; L1:`)<br>• Jump chaining / Branch-to-branch (`JMP L1` where `L1: JMP L2`)<br>• Jump-over-jump condition inversion (`BEQ L1; JMP L2; L1:` -> `BNE L2; L1:`)<br>• Unreachable code elimination after unconditional jumps/returns<br>• Unreferenced label removal<br>• CLI flags & benchmarking suite | **⏳ PENDING**<br>*(See Antigravity Prompt below)* |
+| Team Member | Module & Responsibilities | Contribution | Status |
+| :--- | :--- | :---: | :--- |
+| **Person 1** | **Target Architecture IR, Lexer, Parser & Emitter**<br>• Target ISA specification (Opcodes, Operands)<br>• Instruction IR (`Instruction`, `Operand`)<br>• Assembly file & string parser (`Parser`)<br>• Assembly emitter/pretty-printer<br>• Register usage analysis (`readsRegister`, `writesRegister`)<br>• Person 1 unit tests (`tests/test_person1.cpp`) | **8.33%** | **✅ COMPLETED** |
+| **Person 2** | **Core Peephole Engine & Local Pattern Transformations**<br>• Sliding-window multi-pass optimization engine (`PeepholeOptimizer`)<br>• Fixed-point convergence algorithm<br>• Optimization metrics & reporting (`OptimizationStats`)<br>• Extensible rule interface (`OptimizationRule`)<br>• 7 Optimization patterns: Redundant Load/Store, Dead Store, Redundant Moves, Algebraic Simplification, Strength Reduction, Constant Folding, NOP Elimination<br>• Label safety barrier preservation<br>• Person 2 unit tests (`tests/test_person2.cpp`) | **8.33%** | **✅ COMPLETED** |
+| **Person 3** | **Control Flow & Dead Code Optimizations**<br>• Redundant jump elimination (`JMP L1; L1:`)<br>• Jump chaining / Branch-to-branch (`JMP L1` where `L1: JMP L2`)<br>• Jump-over-jump condition inversion (`BEQ L1; JMP L2; L1:` -> `BNE L2; L1:`)<br>• Unreachable code elimination after unconditional jumps/returns<br>• Unreferenced label removal<br>• CLI flags & benchmarking suite | **8.33%** | **⏳ PENDING**<br>*(See Antigravity Prompt below)* |
+| **TOTAL** | **Milestone 1 Completed (When Person 3 finishes)** | **25.0%** | *(75% of project remaining)* |
 
 ---
 
@@ -115,8 +116,9 @@ You are working on the Compiler Peephole Optimizer project in C++17 located in `
   - `include/OptimizationRule.h` (Abstract rule interface).
   - `include/OptimizationPatterns.h`, `src/OptimizationPatterns.cpp` (7 core local optimizations: redundant load/store, dead store, redundant moves, algebraic identity, strength reduction, constant folding, NOP elimination).
   - `include/PeepholeOptimizer.h`, `src/PeepholeOptimizer.cpp` (Sliding window fixed-point engine).
-  - `tests/test_person2.cpp` (Unit tests).
-- The foundation and local optimizations form the completed 25% project milestone.
+- Together, all 3 team members are completing the 25% project milestone (~8.33% per person).
+- Person 1 and Person 2 have completed their parts (16.67% total).
+- Your work will finish the final 8.33% of this milestone, bringing overall project completion to exactly 25.0% (with 75.0% remaining for future milestones).
 
 ### Your Task (Person 3 Work):
 Implement the Control-Flow and Dead Code Optimizations for the peephole optimizer:
