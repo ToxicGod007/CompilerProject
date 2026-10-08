@@ -1,5 +1,6 @@
 #include "PeepholeOptimizer.h"
 #include "OptimizationPatterns.h"
+#include "ControlFlowOptimizer.h"
 #include <iostream>
 
 namespace compiler {
@@ -24,6 +25,10 @@ void PeepholeOptimizer::clearRules() {
 
 void PeepholeOptimizer::loadStandardRules() {
     m_rules = createPerson2StandardRules();
+    m_rules.push_back(std::make_unique<RedundantJumpRule>());
+    m_rules.push_back(std::make_unique<JumpChainingRule>());
+    m_rules.push_back(std::make_unique<JumpOverJumpRule>());
+    m_rules.push_back(std::make_unique<UnreachableCodeRule>());
 }
 
 bool PeepholeOptimizer::runSinglePass(std::vector<Instruction>& stream, OptimizationStats& stats) {

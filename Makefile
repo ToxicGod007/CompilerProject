@@ -18,8 +18,9 @@ CORE_OBJS = $(OBJ_DIR)/Instruction.o \
 MAIN_BIN = $(BIN_DIR)/peephole_opt
 TEST1_BIN = $(BIN_DIR)/test_person1
 TEST2_BIN = $(BIN_DIR)/test_person2
+TEST3_BIN = $(BIN_DIR)/test_person3
 
-all: $(MAIN_BIN) $(TEST1_BIN) $(TEST2_BIN)
+all: $(MAIN_BIN) $(TEST1_BIN) $(TEST2_BIN) $(TEST3_BIN)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
@@ -43,11 +44,17 @@ $(TEST1_BIN): $(OBJ_DIR)/Instruction.o $(OBJ_DIR)/Parser.o $(TEST_DIR)/test_pers
 $(TEST2_BIN): $(CORE_OBJS) $(TEST_DIR)/test_person2.cpp | $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-test: $(TEST1_BIN) $(TEST2_BIN)
+# Person 3 test executable
+$(TEST3_BIN): $(CORE_OBJS) $(TEST_DIR)/test_person3.cpp | $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+test: $(TEST1_BIN) $(TEST2_BIN) $(TEST3_BIN)
 	@echo "\n>>> RUNNING TEST SUITE (PERSON 1) <<<"
 	./$(TEST1_BIN)
 	@echo "\n>>> RUNNING TEST SUITE (PERSON 2) <<<"
 	./$(TEST2_BIN)
+	@echo "\n>>> RUNNING TEST SUITE (PERSON 3) <<<"
+	./$(TEST3_BIN)
 	@echo "\n>>> ALL TESTS PASSED! <<<\n"
 
 test1: $(TEST1_BIN)
@@ -56,11 +63,14 @@ test1: $(TEST1_BIN)
 test2: $(TEST2_BIN)
 	./$(TEST2_BIN)
 
+test3: $(TEST3_BIN)
+	./$(TEST3_BIN)
+
 demo: $(MAIN_BIN)
 	./$(MAIN_BIN) tests/sample.asm
 
 clean:
 	rm -rf $(OBJ_DIR) $(BIN_DIR)
 
-.PHONY: all test test1 test2 demo clean
+.PHONY: all test test1 test2 test3 demo clean
 
